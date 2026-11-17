@@ -1,0 +1,9 @@
+{
+  "name": "ansi-palette-lab",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Build and preview ANSI terminal color sequences.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
