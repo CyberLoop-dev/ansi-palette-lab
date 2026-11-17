@@ -4,11 +4,11 @@ const rgb = (hex) => hex.match(/[\da-f]{2}/gi).map(v => parseInt(v,16));
 const nearest16 = (c) => palette.reduce((best,p,i) => { const d=p.reduce((s,v,j)=>s+(v-c[j])**2,0); return d<best.d?{i,d}:best; },{i:0,d:Infinity}).i;
 function colorCode(hex, kind, mode) {
   const c=rgb(hex);
-  if(mode==="truecolor") return kind==="fg" ? `38;2;${c.join(";")}` : `48;2;${c.join(";")}`;
+  if(mode==="truecolor") return kind==="fg" ? "38;2;"+c.join(";") : "48;2;"+c.join(";");
   if(mode==="256") {
     const gray=(c[0]+c[1]+c[2])/3;
     const index=(Math.max(...c)-Math.min(...c)<8) ? Math.max(232,Math.min(255,232+Math.round((gray-8)/10))) : 16+36*Math.round(c[0]/51)+6*Math.round(c[1]/51)+Math.round(c[2]/51);
-    return (kind==="fg"?38:48)+`;5;${index}`;
+    return (kind==="fg"?38:48)+";5;"+index;
   }
   const index=nearest16(c);
   return kind==="fg" ? (index<8?30+index:90+index-8) : (index<8?40+index:100+index-8);
